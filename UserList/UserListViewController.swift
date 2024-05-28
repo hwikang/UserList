@@ -12,6 +12,10 @@ class UserListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let network = UserNetwork(manager: NetworkManager())
+        Task {
+             await network.getUsers(query: "test", page: 1)
+        }
     }
 
 

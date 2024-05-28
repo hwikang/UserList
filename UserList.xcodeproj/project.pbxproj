@@ -14,6 +14,12 @@
 		F8C1E3482C045C3C00D3F607 /* UserList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3462C045C3C00D3F607 /* UserList.xcdatamodeld */; };
 		F8C1E34A2C045C3D00D3F607 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8C1E3492C045C3D00D3F607 /* Assets.xcassets */; };
 		F8C1E3552C04943400D3F607 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3542C04943400D3F607 /* NetworkManager.swift */; };
+		F8C1E3572C04A05500D3F607 /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3562C04A05500D3F607 /* UserNetwork.swift */; };
+		F8C1E35A2C05ACBE00D3F607 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3592C05ACBE00D3F607 /* NetworkError.swift */; };
+		F8C1E35D2C05ACDF00D3F607 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E35C2C05ACDF00D3F607 /* User.swift */; };
+		F8C1E3852C05D8BC00D3F607 /* UserListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3842C05D8BC00D3F607 /* UserListRepository.swift */; };
+		F8C1E3882C05F50E00D3F607 /* UserListCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3872C05F50E00D3F607 /* UserListCoreData.swift */; };
+		F8C1E38A2C05F5A300D3F607 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3892C05F5A300D3F607 /* CoreDataError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +34,12 @@
 		F8C1E3492C045C3D00D3F607 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8C1E34E2C045C3D00D3F607 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8C1E3542C04943400D3F607 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F8C1E3562C04A05500D3F607 /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
+		F8C1E3592C05ACBE00D3F607 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		F8C1E35C2C05ACDF00D3F607 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F8C1E3842C05D8BC00D3F607 /* UserListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListRepository.swift; sourceTree = "<group>"; };
+		F8C1E3872C05F50E00D3F607 /* UserListCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCoreData.swift; sourceTree = "<group>"; };
+		F8C1E3892C05F5A300D3F607 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +60,6 @@
 				F49C21FFE6DB5ED9FA504A0B /* Pods-UserList.debug.xcconfig */,
 				2BEAB22CF8EAC427EBDBB242 /* Pods-UserList.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -84,12 +95,42 @@
 				F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */,
 				F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */,
 				F8C1E3412C045C3C00D3F607 /* UserListViewController.swift */,
-				F8C1E3542C04943400D3F607 /* NetworkManager.swift */,
+				F8C1E3842C05D8BC00D3F607 /* UserListRepository.swift */,
+				F8C1E3862C05F4F000D3F607 /* CoreData */,
+				F8C1E35B2C05ACD800D3F607 /* Entity */,
+				F8C1E3582C05ACB100D3F607 /* Network */,
 				F8C1E3492C045C3D00D3F607 /* Assets.xcassets */,
 				F8C1E34E2C045C3D00D3F607 /* Info.plist */,
 				F8C1E3462C045C3C00D3F607 /* UserList.xcdatamodeld */,
 			);
 			path = UserList;
+			sourceTree = "<group>";
+		};
+		F8C1E3582C05ACB100D3F607 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				F8C1E3542C04943400D3F607 /* NetworkManager.swift */,
+				F8C1E3592C05ACBE00D3F607 /* NetworkError.swift */,
+				F8C1E3562C04A05500D3F607 /* UserNetwork.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		F8C1E35B2C05ACD800D3F607 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				F8C1E35C2C05ACDF00D3F607 /* User.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		F8C1E3862C05F4F000D3F607 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F8C1E3872C05F50E00D3F607 /* UserListCoreData.swift */,
+				F8C1E3892C05F5A300D3F607 /* CoreDataError.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,10 +247,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C1E3552C04943400D3F607 /* NetworkManager.swift in Sources */,
+				F8C1E35A2C05ACBE00D3F607 /* NetworkError.swift in Sources */,
 				F8C1E3482C045C3C00D3F607 /* UserList.xcdatamodeld in Sources */,
 				F8C1E3422C045C3C00D3F607 /* UserListViewController.swift in Sources */,
+				F8C1E3852C05D8BC00D3F607 /* UserListRepository.swift in Sources */,
+				F8C1E35D2C05ACDF00D3F607 /* User.swift in Sources */,
+				F8C1E3572C04A05500D3F607 /* UserNetwork.swift in Sources */,
 				F8C1E33E2C045C3C00D3F607 /* AppDelegate.swift in Sources */,
+				F8C1E38A2C05F5A300D3F607 /* CoreDataError.swift in Sources */,
 				F8C1E3402C045C3C00D3F607 /* SceneDelegate.swift in Sources */,
+				F8C1E3882C05F50E00D3F607 /* UserListCoreData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +391,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L3B9L4FDBB;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UserList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -373,6 +421,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L3B9L4FDBB;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UserList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
