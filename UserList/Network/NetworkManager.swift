@@ -19,7 +19,11 @@ final public class NetworkManager {
             return .failure(NetworkError.urlError)
         }
         print("url - \(url)")
-        let result = await session.request(url, method: method).validate().serializingData().response
+        var headers: HTTPHeaders?
+        if let apiKey = Bundle.main.apiKey {
+            headers = ["Authorization": "Bearer \(apiKey)"]
+        }
+        let result = await session.request(url, method: method, headers: headers).validate().serializingData().response
         guard let data = result.data else { return .failure(NetworkError.dataNil) }
         guard let response =  result.response else { return .failure(NetworkError.invalid) }
         

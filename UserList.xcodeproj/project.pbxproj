@@ -10,6 +10,8 @@
 		4B534C915C4DBCCC8AB5947D /* Pods_UserList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26CFA64F4DA8803127D284F /* Pods_UserList.framework */; };
 		F894A6FB2C08070D0039B021 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A6FA2C08070D0039B021 /* TabButtonView.swift */; };
 		F894A6FD2C0843AF0039B021 /* SearchUserTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A6FC2C0843AF0039B021 /* SearchUserTextField.swift */; };
+		F894A6FF2C08700B0039B021 /* Secret.plist in Resources */ = {isa = PBXBuildFile; fileRef = F894A6FE2C08700B0039B021 /* Secret.plist */; };
+		F894A7042C0874490039B021 /* Extension + Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A7032C0874490039B021 /* Extension + Bundle.swift */; };
 		F8C1E33E2C045C3C00D3F607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */; };
 		F8C1E3402C045C3C00D3F607 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */; };
 		F8C1E3422C045C3C00D3F607 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3412C045C3C00D3F607 /* UserViewController.swift */; };
@@ -31,6 +33,8 @@
 		F49C21FFE6DB5ED9FA504A0B /* Pods-UserList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserList.debug.xcconfig"; path = "Target Support Files/Pods-UserList/Pods-UserList.debug.xcconfig"; sourceTree = "<group>"; };
 		F894A6FA2C08070D0039B021 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		F894A6FC2C0843AF0039B021 /* SearchUserTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTextField.swift; sourceTree = "<group>"; };
+		F894A6FE2C08700B0039B021 /* Secret.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secret.plist; sourceTree = "<group>"; };
+		F894A7032C0874490039B021 /* Extension + Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Bundle.swift"; sourceTree = "<group>"; };
 		F8C1E33A2C045C3C00D3F607 /* UserList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F894A7002C08742D0039B021 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F894A7032C0874490039B021 /* Extension + Bundle.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F8C1E3312C045C3C00D3F607 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +122,7 @@
 				F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */,
 				F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */,
 				F8C1E3412C045C3C00D3F607 /* UserViewController.swift */,
+				F894A7002C08742D0039B021 /* Extension */,
 				F894A6F92C0806EE0039B021 /* View */,
 				F8C1E3D72C06BC6200D3F607 /* UserViewModel.swift */,
 				F8C1E3D62C06BC4900D3F607 /* Repository */,
@@ -118,6 +131,7 @@
 				F8C1E3582C05ACB100D3F607 /* Network */,
 				F8C1E3492C045C3D00D3F607 /* Assets.xcassets */,
 				F8C1E34E2C045C3D00D3F607 /* Info.plist */,
+				F894A6FE2C08700B0039B021 /* Secret.plist */,
 				F8C1E3462C045C3C00D3F607 /* UserList.xcdatamodeld */,
 			);
 			path = UserList;
@@ -218,6 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F894A6FF2C08700B0039B021 /* Secret.plist in Resources */,
 				F8C1E34A2C045C3D00D3F607 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +295,7 @@
 				F8C1E3852C05D8BC00D3F607 /* UserRepository.swift in Sources */,
 				F8C1E35D2C05ACDF00D3F607 /* User.swift in Sources */,
 				F8C1E3572C04A05500D3F607 /* UserNetwork.swift in Sources */,
+				F894A7042C0874490039B021 /* Extension + Bundle.swift in Sources */,
 				F8C1E33E2C045C3C00D3F607 /* AppDelegate.swift in Sources */,
 				F8C1E38A2C05F5A300D3F607 /* CoreDataError.swift in Sources */,
 				F894A6FB2C08070D0039B021 /* TabButtonView.swift in Sources */,
