@@ -1,5 +1,5 @@
 //
-//  UserListRepository.swift
+//  UserRepository.swift
 //  UserList
 //
 //  Created by paytalab on 5/28/24.
@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-final class UserListRepository {
-    private let coreData: UserListCoreData
+final class UserRepository {
+    private let coreData: UserCoreData
     private let network: UserNetwork
 
-    init(coreData: UserListCoreData, network: UserNetwork) {
+    init(coreData: UserCoreData, network: UserNetwork) {
         self.coreData = coreData
         self.network = network
     }
@@ -27,7 +27,7 @@ final class UserListRepository {
         }
     }
     
-    public func saveFavoriteUsers(user: User) -> Result<[String : [User]], Error> {
+    public func saveFavoriteUser(user: User) -> Result<[String : [User]], Error> {
         return coreData.saveFavoriteUsers(user: user)
     }
     

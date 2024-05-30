@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-final class UserListCoreData {
+final class UserCoreData {
     private let viewContext: NSManagedObjectContext
 
     init(viewContext: NSManagedObjectContext) {

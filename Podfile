@@ -7,6 +7,7 @@ target 'UserList' do
 
   # Pods for UserList
   pod 'RxSwift'
+  pod 'RxCocoa'
   pod 'SnapKit'
   pod 'Alamofire'
 end
