@@ -17,7 +17,7 @@ public enum TabButtonType: String {
 final public class TabButtonView: UIStackView {
 
     private let disposeBag = DisposeBag()
-    public let selectedType = PublishRelay<TabButtonType>()
+    public let selectedType = BehaviorRelay<TabButtonType>(value: .api)
     private let tabButtonStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -32,6 +32,7 @@ final public class TabButtonView: UIStackView {
         alignment = .fill
         distribution = .fillEqually
         addButtons(typeList: typeList)
+        bindView()
     }
     
     private func addButtons(typeList: [TabButtonType]) {
@@ -40,19 +41,15 @@ final public class TabButtonView: UIStackView {
             addArrangedSubview(tabButton)
             tabButton.rx.tap.bind { [weak self] in
                 guard let self = self, !tabButton.isSelected else { return }
-                self.arrangedSubviews.compactMap { $0 as? TabButton }.forEach { $0.isSelected = false }
-                tabButton.isSelected = true
                 selectedType.accept(type)
             }.disposed(by: disposeBag)
         }
-
     }
     
-    public func select(index: Int) {
-        guard arrangedSubviews.indices.contains(index),
-            let selectedButton = arrangedSubviews[index] as? TabButton else { return }
-        arrangedSubviews.compactMap { $0 as? TabButton }.forEach { $0.isSelected = false }
-        selectedButton.isSelected = true
+    private func bindView() {
+        selectedType.bind { [weak self] type in
+            self?.arrangedSubviews.compactMap { $0 as? TabButton }.forEach { $0.isSelected = $0.type == type ? true : false }
+        }.disposed(by: disposeBag)
     }
     
     required init(coder: NSCoder) {

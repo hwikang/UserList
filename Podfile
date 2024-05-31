@@ -10,4 +10,5 @@ target 'UserList' do
   pod 'RxCocoa'
   pod 'SnapKit'
   pod 'Alamofire'
+  pod 'Kingfisher'
 end

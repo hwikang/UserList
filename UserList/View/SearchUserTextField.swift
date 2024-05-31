@@ -19,6 +19,8 @@ final public class SearchUserTextField: UITextField {
         imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         leftView = imageView
         leftViewMode = .always
+        textColor = .black
+        placeholder = "검색어를 입력해 주세요"
     }
     
     required init?(coder: NSCoder) {
