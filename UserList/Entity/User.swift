@@ -30,7 +30,6 @@ public struct User: Decodable, Hashable {
     public let id: Int
     public let login: String
     public let imageURL: String
-    public var favorite: Bool = false
   
     enum CodingKeys: String, CodingKey {
         case id

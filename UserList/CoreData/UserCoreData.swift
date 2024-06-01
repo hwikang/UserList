@@ -15,7 +15,7 @@ final class UserCoreData {
         self.viewContext = viewContext
     }
     
-    public func saveFavoriteUsers(user: User) -> Result<[String: [User]], Error> {
+    public func saveFavoriteUsers(user: User) -> Result<[User], Error> {
         guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteUser", in: viewContext) else {
             return .failure(CoreDataError.entityNotFound)}
         
@@ -32,7 +32,7 @@ final class UserCoreData {
         return getFavoriteUsers()
     }
     
-    public func deleteFavoriteUser(userID: Int) -> Result<[String : [User]], Error> {
+    public func deleteFavoriteUser(userID: Int) -> Result<[User], Error> {
         let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", userID)
         do {
@@ -46,7 +46,7 @@ final class UserCoreData {
         return getFavoriteUsers()
     }
     
-    public func getFavoriteUsers() -> Result<[String: [User]], Error>  {
+    public func getFavoriteUsers() -> Result<[User], Error>  {
         let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
         do {
             let result = try viewContext.fetch(fetchRequest)
@@ -57,22 +57,14 @@ final class UserCoreData {
                 return User(id: id, login: login, imageURL: imageURL)
             })
             let users = Array(userSet)
-            let userData = convertListToDictionary(users: users)
-            print("userData \(userData)")
-            return .success(userData)
+//            let userData = convertListToDictionary(users: users)
+//            print("userData \(userData)")
+            return .success(users)
         } catch let error {
             return .failure(CoreDataError.readError(error.localizedDescription))
         }
     }
-    
-    private func convertListToDictionary(users: [User]) -> [String: [User]] {
-        let groupedUsers = users.reduce(into: [String: [User]]()) { (dict, user) in
-            let index = user.login.index(user.login.startIndex, offsetBy: 1)
-            let key = String(user.login[..<index]).uppercased()
-            dict[key, default: []].append(user)
-        }
-        return groupedUsers
-    }
+
 }
 
 

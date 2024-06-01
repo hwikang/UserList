@@ -27,13 +27,13 @@ final class UserRepository {
         }
     }
     
-    public func saveFavoriteUser(user: User) -> Result<[String : [User]], Error> {
+    public func saveFavoriteUser(user: User) -> Result<[User], Error> {
         return coreData.saveFavoriteUsers(user: user)
     }
-    public func deleteFavoriteUser(userID: Int) -> Result<[String : [User]], Error> {
+    public func deleteFavoriteUser(userID: Int) -> Result<[User], Error> {
         return coreData.deleteFavoriteUser(userID: userID)
     }
-    public func getFavoriteUsers() -> Result<[String : [User]], Error> {
+    public func getFavoriteUsers() -> Result<[User], Error> {
         return coreData.getFavoriteUsers()
     }
     

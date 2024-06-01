@@ -59,11 +59,10 @@ final public class ListCollectionViewCell: UICollectionViewCell {
        
     }
     
-    public func apply(user: User, hideButton: Bool) {
+    public func apply(user: User, isFavoriteUser: Bool) {
         imageView.kf.setImage(with: URL(string: user.imageURL))
         nameLabel.text = user.login
-        favoriteButton.isSelected = user.favorite
-        favoriteButton.isHidden = hideButton
+        favoriteButton.isSelected = isFavoriteUser
     }
     
     required init?(coder: NSCoder) {
