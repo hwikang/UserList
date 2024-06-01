@@ -10,6 +10,12 @@ import Alamofire
 
 final public class NetworkManager {
     private let session: Session
+    private let tokenHeaders: HTTPHeaders? = {
+        guard let apiKey = Bundle.main.apiKey else { return nil }
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(apiKey)"]
+        return headers
+    }()
+    
     init(session: Session = Session.default) {
         self.session = session
     }
@@ -19,11 +25,8 @@ final public class NetworkManager {
             return .failure(NetworkError.urlError)
         }
         print("url - \(url)")
-        var headers: HTTPHeaders?
-        if let apiKey = Bundle.main.apiKey {
-            headers = ["Authorization": "Bearer \(apiKey)"]
-        }
-        let result = await session.request(url, method: method, headers: headers).validate().serializingData().response
+      
+        let result = await session.request(url, method: method, headers: tokenHeaders).validate().serializingData().response
         guard let data = result.data else { return .failure(NetworkError.dataNil) }
         guard let response =  result.response else { return .failure(NetworkError.invalid) }
         
@@ -35,7 +38,7 @@ final public class NetworkManager {
                 return .failure(NetworkError.failToDecode(error.localizedDescription))
             }
         } else {
-            print(result.error?.localizedDescription)
+            debugPrint(result.error?.localizedDescription)
             return .failure(NetworkError.serverError(response.statusCode))
         }
     }

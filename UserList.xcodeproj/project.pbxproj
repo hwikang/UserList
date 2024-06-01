@@ -104,6 +104,16 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		F894A79E2C0B2B020039B021 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				F8C1E3D72C06BC6200D3F607 /* UserViewModel.swift */,
+				F8C1E3412C045C3C00D3F607 /* UserViewController.swift */,
+				F894A6F92C0806EE0039B021 /* View */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		F8C1E3312C045C3C00D3F607 = {
 			isa = PBXGroup;
 			children = (
@@ -127,10 +137,8 @@
 			children = (
 				F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */,
 				F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */,
-				F8C1E3D72C06BC6200D3F607 /* UserViewModel.swift */,
-				F8C1E3412C045C3C00D3F607 /* UserViewController.swift */,
+				F894A79E2C0B2B020039B021 /* Presentation */,
 				F894A7002C08742D0039B021 /* Extension */,
-				F894A6F92C0806EE0039B021 /* View */,
 				F8C1E3D62C06BC4900D3F607 /* Repository */,
 				F8C1E3862C05F4F000D3F607 /* CoreData */,
 				F8C1E35B2C05ACD800D3F607 /* Entity */,
