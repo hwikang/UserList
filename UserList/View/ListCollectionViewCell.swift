@@ -7,9 +7,11 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 
 final public class ListCollectionViewCell: UICollectionViewCell {
     static let id = "ListCollectionViewCell"
+    public var disposeBag = DisposeBag()
     private let imageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
@@ -28,10 +30,13 @@ final public class ListCollectionViewCell: UICollectionViewCell {
     public let favoriteButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)        
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         return button
     }()
-    
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
     override init(frame: CGRect) {
         super.init(frame: .zero)
         addSubview(imageView)
@@ -51,12 +56,14 @@ final public class ListCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(imageView.snp.trailing).offset(20)
             make.top.trailing.equalToSuperview().inset(10)
         }
+       
     }
     
-    public func apply(user: User) {
+    public func apply(user: User, hideButton: Bool) {
         imageView.kf.setImage(with: URL(string: user.imageURL))
         nameLabel.text = user.login
         favoriteButton.isSelected = user.favorite
+        favoriteButton.isHidden = hideButton
     }
     
     required init?(coder: NSCoder) {

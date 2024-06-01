@@ -30,7 +30,9 @@ final class UserRepository {
     public func saveFavoriteUser(user: User) -> Result<[String : [User]], Error> {
         return coreData.saveFavoriteUsers(user: user)
     }
-    
+    public func deleteFavoriteUser(userID: Int) -> Result<[String : [User]], Error> {
+        return coreData.deleteFavoriteUser(userID: userID)
+    }
     public func getFavoriteUsers() -> Result<[String : [User]], Error> {
         return coreData.getFavoriteUsers()
     }

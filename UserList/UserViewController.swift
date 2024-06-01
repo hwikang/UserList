@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class UserViewController: UIViewController {
     private let viewModel: UserViewModel
@@ -50,18 +51,44 @@ final class UserViewController: UIViewController {
             fetchUserQuery: fetchUserListViewController.textfield.rx.text.orEmpty.distinctUntilChanged()
                 .debounce(.milliseconds(200), scheduler: MainScheduler.instance),
             favoriteUserQuery: favoriteUserListViewController.textfield.rx.text.orEmpty.distinctUntilChanged()
-                .debounce(.milliseconds(200), scheduler: MainScheduler.instance)))
+                .debounce(.milliseconds(200), scheduler: MainScheduler.instance),
+            saveFavorite: fetchUserListViewController.saveFavorite.asObservable(),
+            deleteFavorite: fetchUserListViewController.deleteFavorite.asObservable()
+        ))
         
-        output.fetchUserList.observe(on: MainScheduler.instance)
-            .bind { [weak self] users in
-            
-            var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
-            let items: [Item] = users.map { Item.list(user: $0) }
-            let section = Section.api
-            snapshot.appendSections([section])
-            snapshot.appendItems(items, toSection: section)
-            self?.fetchUserListViewController.applyData(snapshot: snapshot)
-        }.disposed(by: disposeBag)
+        output.fetchUserList
+            .map({ users in
+                var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+                let items: [Item] = users.map { Item.list(user: $0) }
+                let section = Section.api
+                snapshot.appendSections([section])
+                snapshot.appendItems(items, toSection: section)
+                return snapshot
+            })
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] snapshot in
+                self?.fetchUserListViewController.applyData(snapshot: snapshot)
+            }.disposed(by: disposeBag)
+        
+        output.favoriteUserList
+            .map({ favoriteUsers in
+                let keys = favoriteUsers.keys.sorted()
+                var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
+                keys.forEach { key in
+                    let section = Section.favorite(initial: key)
+                    snapshot.appendSections([section])
+                    
+                    if let users = favoriteUsers[key] {
+                        let items = users.map { Item.list(user: $0) }
+                        snapshot.appendItems(items, toSection: section)
+                    }
+                }
+                return snapshot
+            })
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] snapshot in
+                self?.favoriteUserListViewController.applyData(snapshot: snapshot)
+            }.disposed(by: disposeBag)
     }
     
     private func bindView() {
@@ -77,6 +104,7 @@ final class UserViewController: UIViewController {
 
             }
         }.disposed(by: disposeBag)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -85,9 +113,9 @@ final class UserViewController: UIViewController {
     
 }
 
-public enum Section {
+public enum Section: Hashable {
     case api
-    case favorite
+    case favorite(initial: String)
 }
 
 public enum Item: Hashable {
@@ -95,6 +123,9 @@ public enum Item: Hashable {
 }
 
 final public class UserListViewController: UIViewController {
+//    private let sectionType: Section
+    let saveFavorite = PublishRelay<User>()
+    let deleteFavorite = PublishRelay<Int>()
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     public let textfield = SearchUserTextField()
     private lazy var collectionView: UICollectionView = {
@@ -103,7 +134,11 @@ final public class UserListViewController: UIViewController {
         collectionView.backgroundColor = .clear
         return collectionView
     }()
-
+    
+//    init(sectionType: Section) {
+//        self.sectionType = sectionType
+//    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -128,18 +163,27 @@ final public class UserListViewController: UIViewController {
     }
     
     private func setDataSource() {
-        self.dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) {
-            (collectionView: UICollectionView, indexPath: IndexPath, item: Item) -> UICollectionViewCell? in
+        self.dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
+            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: item),
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.id, for: indexPath) as? ListCollectionViewCell,
+                  case let .list(user) = item else { return nil }
             
-            if case let .list(user) = item {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.id, for: indexPath) as? ListCollectionViewCell
-                cell?.apply(user: user)
-                return cell
+            switch section {
+            case .api:
+                cell.apply(user: user, hideButton: false)
+                cell.favoriteButton.rx.tap.bind(onNext: { [weak self] in
+                    if user.favorite {
+                        self?.deleteFavorite.accept(user.id)
+                    } else {
+                        self?.saveFavorite.accept(user)
+                    }
+                }).disposed(by: cell.disposeBag)
+            case .favorite(let initial):
+                cell.apply(user: user, hideButton: true)
             }
-            
-            return nil
+           
+            return cell
         }
-        
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -158,5 +202,9 @@ final public class UserListViewController: UIViewController {
         section.interGroupSpacing = 10
         return section
     }
+    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
 }

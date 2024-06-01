@@ -32,18 +32,32 @@ final class UserCoreData {
         return getFavoriteUsers()
     }
     
+    public func deleteFavoriteUser(userID: Int) -> Result<[String : [User]], Error> {
+        let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %d", userID)
+        do {
+            let favoriteUsers = try viewContext.fetch(fetchRequest)
+            favoriteUsers.forEach {  viewContext.delete($0) }
+            try viewContext.save()
+        } catch let error {
+            return .failure(CoreDataError.deleteError(error.localizedDescription))
+            
+        }
+        return getFavoriteUsers()
+    }
+    
     public func getFavoriteUsers() -> Result<[String: [User]], Error>  {
         let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
         do {
             let result = try viewContext.fetch(fetchRequest)
-            let user: [User] = result.compactMap { user in
+            let userSet = Set<User>(result.compactMap { user in
                 guard let login = user.value(forKey: "login") as? String,
                       let imageURL = user.value(forKey: "imageURL") as? String,
                       let id = user.value(forKey: "id") as? Int else { return nil }
                 return User(id: id, login: login, imageURL: imageURL)
-            }
-            
-            let userData = convertListToDictionary(users: user)
+            })
+            let users = Array(userSet)
+            let userData = convertListToDictionary(users: users)
             print("userData \(userData)")
             return .success(userData)
         } catch let error {

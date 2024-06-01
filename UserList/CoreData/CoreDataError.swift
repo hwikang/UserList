@@ -11,5 +11,5 @@ enum CoreDataError: Error {
     case entityNotFound
     case saveError(String)
     case readError(String)
-    case deleteErro(String)
+    case deleteError(String)
 }
