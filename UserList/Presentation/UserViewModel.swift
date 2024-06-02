@@ -15,6 +15,7 @@ final class UserViewModel {
     private var page = 1
     private let fetchUserList = BehaviorRelay<[User]>(value: [])
     private let favoriteUserList = BehaviorRelay<[User]>(value: [])
+    private let error = PublishRelay<String>()
     
     init(repository: UserRepository) {
         self.repository = repository
@@ -30,6 +31,7 @@ final class UserViewModel {
     struct Output {
         public let fetchUserList: Observable<[(user: User, isFavorite: Bool)]>
         public let favoriteUserList: Observable<[String:[User]]>
+        public let error: Observable<String>
     }
     
     public func transform(input: Input) -> Output {
@@ -73,7 +75,7 @@ final class UserViewModel {
                 }
                 return self?.convertListToDictionary(users: filteredUsers)
             }
-        return Output(fetchUserList: fetchUserList, favoriteUserList: favoriteUserList.asObservable())
+        return Output(fetchUserList: fetchUserList, favoriteUserList: favoriteUserList.asObservable(), error: error.asObservable())
     }
     
     private func getFavoriteUsers() {
@@ -82,7 +84,7 @@ final class UserViewModel {
         case .success(let favoriteUsers):
             favoriteUserList.accept(favoriteUsers)
         case .failure(let error):
-            print(error)
+            self.error.accept(error.description)
         }
     }
     
@@ -93,7 +95,7 @@ final class UserViewModel {
         case .success(let favoriteUsers):
             favoriteUserList.accept(favoriteUsers)
         case .failure(let error):
-            print(error)
+            self.error.accept(error.description)
         }
     }
     
@@ -103,20 +105,19 @@ final class UserViewModel {
         case .success(let favoriteUsers):
             favoriteUserList.accept(favoriteUsers)
         case .failure(let error):
-            print(error)
+            self.error.accept(error.description)
         }
     }
     
     private func fetchUsers(query: String, page: Int) {
         guard let urlAllowedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-       
         Task {
             let resut = await repository.fetchUsers(query: urlAllowedQuery, page: page)
             switch resut {
             case .success(let users):
                 fetchUserList.accept(fetchUserList.value + users)
             case .failure(let error):
-                print(error)
+                self.error.accept(error.description)
             }
         }
     }
@@ -125,13 +126,11 @@ final class UserViewModel {
         if query.isEmpty { 
             return false
         } else if nameValidation(query: query) == false {
-            //TODO - 에러 표시
-            print("유효하지 않은 이름")
+            self.error.accept("유효 하지 않은 이름입니다.")
             return false
         } else {
             return true
         }
-       
     }
     
     private func nameValidation(query: String) -> Bool {

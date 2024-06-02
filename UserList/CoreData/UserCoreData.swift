@@ -15,9 +15,9 @@ final class UserCoreData {
         self.viewContext = viewContext
     }
     
-    public func saveFavoriteUsers(user: User) -> Result<[User], Error> {
+    public func saveFavoriteUsers(user: User) -> Result<[User], CoreDataError> {
         guard let entity = NSEntityDescription.entity(forEntityName: "FavoriteUser", in: viewContext) else {
-            return .failure(CoreDataError.entityNotFound)}
+            return .failure(CoreDataError.entityNotFound("FavoriteUser"))}
         
         let userObject = NSManagedObject(entity: entity, insertInto: viewContext)
         userObject.setValue(user.id, forKey: "id")
@@ -32,7 +32,7 @@ final class UserCoreData {
         return getFavoriteUsers()
     }
     
-    public func deleteFavoriteUser(userID: Int) -> Result<[User], Error> {
+    public func deleteFavoriteUser(userID: Int) -> Result<[User], CoreDataError> {
         let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %d", userID)
         do {
@@ -46,7 +46,7 @@ final class UserCoreData {
         return getFavoriteUsers()
     }
     
-    public func getFavoriteUsers() -> Result<[User], Error>  {
+    public func getFavoriteUsers() -> Result<[User], CoreDataError>  {
         let fetchRequest: NSFetchRequest<FavoriteUser> = FavoriteUser.fetchRequest()
         do {
             let result = try viewContext.fetch(fetchRequest)
@@ -57,8 +57,6 @@ final class UserCoreData {
                 return User(id: id, login: login, imageURL: imageURL)
             })
             let users = Array(userSet)
-//            let userData = convertListToDictionary(users: users)
-//            print("userData \(userData)")
             return .success(users)
         } catch let error {
             return .failure(CoreDataError.readError(error.localizedDescription))

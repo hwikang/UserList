@@ -13,7 +13,7 @@ final class UserNetwork {
         self.manager = manager
     }
     
-    public func getUsers(query: String, page: Int) async -> Result<UserResult, Error> {
+    public func getUsers(query: String, page: Int) async -> Result<UserResult, NetworkError> {
         let url = "https://api.github.com/search/users?q=\(query)&page=\(page)"
         return await manager.fetchData(url: url, method: .get, dataType: UserResult.self)
     }

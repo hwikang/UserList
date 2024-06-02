@@ -17,7 +17,7 @@ final class UserRepository {
         self.network = network
     }
     
-    public func fetchUsers(query: String, page: Int) async -> Result<[User], Error> {
+    public func fetchUsers(query: String, page: Int) async -> Result<[User], NetworkError> {
         let result = await network.getUsers(query: query, page: page)
         switch result {
         case .success(let result):
@@ -27,13 +27,13 @@ final class UserRepository {
         }
     }
     
-    public func saveFavoriteUser(user: User) -> Result<[User], Error> {
+    public func saveFavoriteUser(user: User) -> Result<[User], CoreDataError> {
         return coreData.saveFavoriteUsers(user: user)
     }
-    public func deleteFavoriteUser(userID: Int) -> Result<[User], Error> {
+    public func deleteFavoriteUser(userID: Int) -> Result<[User], CoreDataError> {
         return coreData.deleteFavoriteUser(userID: userID)
     }
-    public func getFavoriteUsers() -> Result<[User], Error> {
+    public func getFavoriteUsers() -> Result<[User], CoreDataError> {
         return coreData.getFavoriteUsers()
     }
     

@@ -14,6 +14,7 @@
 		F894A7042C0874490039B021 /* Extension + Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A7032C0874490039B021 /* Extension + Bundle.swift */; };
 		F894A7062C09597D0039B021 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A7052C09597D0039B021 /* ListCollectionViewCell.swift */; };
 		F894A79D2C0B28590039B021 /* UserCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F894A79C2C0B28590039B021 /* UserCollectionViewHeader.swift */; };
+		F8AF666F2C0C293300CD7446 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AF666E2C0C293300CD7446 /* UserListViewController.swift */; };
 		F8C1E33E2C045C3C00D3F607 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */; };
 		F8C1E3402C045C3C00D3F607 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */; };
 		F8C1E3422C045C3C00D3F607 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C1E3412C045C3C00D3F607 /* UserViewController.swift */; };
@@ -39,6 +40,7 @@
 		F894A7032C0874490039B021 /* Extension + Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Bundle.swift"; sourceTree = "<group>"; };
 		F894A7052C09597D0039B021 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		F894A79C2C0B28590039B021 /* UserCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewHeader.swift; sourceTree = "<group>"; };
+		F8AF666E2C0C293300CD7446 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		F8C1E33A2C045C3C00D3F607 /* UserList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UserList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C1E33D2C045C3C00D3F607 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8C1E33F2C045C3C00D3F607 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				F8C1E3D72C06BC6200D3F607 /* UserViewModel.swift */,
 				F8C1E3412C045C3C00D3F607 /* UserViewController.swift */,
+				F8AF666E2C0C293300CD7446 /* UserListViewController.swift */,
 				F894A6F92C0806EE0039B021 /* View */,
 			);
 			path = Presentation;
@@ -317,6 +320,7 @@
 				F894A6FB2C08070D0039B021 /* TabButtonView.swift in Sources */,
 				F8C1E3402C045C3C00D3F607 /* SceneDelegate.swift in Sources */,
 				F8C1E3882C05F50E00D3F607 /* UserCoreData.swift in Sources */,
+				F8AF666F2C0C293300CD7446 /* UserListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
