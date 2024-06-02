@@ -19,10 +19,13 @@ public enum Item: Hashable {
 }
 
 final public class UserListViewController: UIViewController {
-    let saveFavorite = PublishRelay<User>()
-    let deleteFavorite = PublishRelay<Int>()
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
+    public let saveFavorite = PublishRelay<User>()
+    public let deleteFavorite = PublishRelay<Int>()
+    public let fetchMore = PublishRelay<Void>()
     public let textfield = SearchUserTextField()
+
+    private let disposeBag = DisposeBag()
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.id)
@@ -35,6 +38,7 @@ final public class UserListViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        bindView()
     }
     
     public func applyData(snapshot: NSDiffableDataSourceSnapshot<Section, Item>) {
@@ -53,6 +57,21 @@ final public class UserListViewController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
         }
         setDataSource()
+    }
+    
+    private func bindView() {
+        collectionView.rx.prefetchItems.bind { [weak self] indexPath in
+            let snapshot = self?.dataSource?.snapshot()
+            guard let lastIndexPath = indexPath.last,
+                  let section = snapshot?.sectionIdentifiers[lastIndexPath.section],
+//                  let section = self?.dataSource?.sectionIdentifier(for: lastIndexPath.section),
+                  let numberOfItems = snapshot?.numberOfItems(inSection: section) else { return }
+            
+            if lastIndexPath.row > numberOfItems - 2 {
+                print("Fetch@")
+                self?.fetchMore.accept(())
+            }
+        }.disposed(by: disposeBag)
     }
     
     private func setDataSource() {

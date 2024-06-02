@@ -47,13 +47,15 @@ final class UserViewController: UIViewController {
         }
     }
     private func bindViewModel() {
+     
         let output = viewModel.transform(input: UserViewModel.Input(
             fetchUserQuery: fetchUserListViewController.textfield.rx.text.orEmpty.distinctUntilChanged()
                 .debounce(.milliseconds(200), scheduler: MainScheduler.instance),
             favoriteUserQuery: favoriteUserListViewController.textfield.rx.text.orEmpty.distinctUntilChanged()
                 .debounce(.milliseconds(200), scheduler: MainScheduler.instance),
             saveFavorite: fetchUserListViewController.saveFavorite.asObservable(),
-            deleteFavorite: fetchUserListViewController.deleteFavorite.asObservable()
+            deleteFavorite: fetchUserListViewController.deleteFavorite.asObservable(),
+            fetchMore: fetchUserListViewController.fetchMore.asObservable()
         ))
         
         output.fetchUserList

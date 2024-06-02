@@ -27,6 +27,7 @@ final class UserViewModel {
         public let favoriteUserQuery: Observable<String>
         public let saveFavorite: Observable<User>
         public let deleteFavorite: Observable<Int>
+        public let fetchMore: Observable<Void>
     }
     struct Output {
         public let fetchUserList: Observable<[(user: User, isFavorite: Bool)]>
@@ -42,7 +43,6 @@ final class UserViewModel {
             .bind { [weak self] query in
                 guard let self = self else { return }
                 page = 1
-                self.fetchUserList.accept([])
                 fetchUsers(query: query, page: page)
             }.disposed(by: disposeBag)
         
@@ -53,6 +53,14 @@ final class UserViewModel {
         input.deleteFavorite.bind { [weak self] userID in
             self?.deleteFavoriteUser(userID: userID)
         }.disposed(by: disposeBag)
+        
+        input.fetchMore
+            .withLatestFrom(input.fetchUserQuery)
+            .bind { [weak self] query in
+                guard let self = self else { return }
+                page += 1
+                fetchUsers(query: query, page: page)
+            }.disposed(by: disposeBag)
         
         let fetchUserList = Observable.combineLatest(fetchUserList, favoriteUserList).map { fetchUsers, favoriteUsers in
             let userSet = Set(favoriteUsers)
@@ -115,7 +123,11 @@ final class UserViewModel {
             let resut = await repository.fetchUsers(query: urlAllowedQuery, page: page)
             switch resut {
             case .success(let users):
-                fetchUserList.accept(fetchUserList.value + users)
+                if page == 1 {
+                    fetchUserList.accept(users)
+                } else {
+                    fetchUserList.accept(fetchUserList.value + users)
+                }
             case .failure(let error):
                 self.error.accept(error.description)
             }
