@@ -23,6 +23,7 @@ final public class ListCollectionViewCell: UICollectionViewCell {
     private let nameLabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .black
         label.numberOfLines = 2
         return label
     }()

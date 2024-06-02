@@ -64,11 +64,9 @@ final public class UserListViewController: UIViewController {
             let snapshot = self?.dataSource?.snapshot()
             guard let lastIndexPath = indexPath.last,
                   let section = snapshot?.sectionIdentifiers[lastIndexPath.section],
-//                  let section = self?.dataSource?.sectionIdentifier(for: lastIndexPath.section),
                   let numberOfItems = snapshot?.numberOfItems(inSection: section) else { return }
             
             if lastIndexPath.row > numberOfItems - 2 {
-                print("Fetch@")
                 self?.fetchMore.accept(())
             }
         }.disposed(by: disposeBag)

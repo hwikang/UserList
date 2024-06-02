@@ -12,6 +12,7 @@ final class UserCollectionViewHeader: UICollectionReusableView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
         return label
     }()
     override init(frame: CGRect) {

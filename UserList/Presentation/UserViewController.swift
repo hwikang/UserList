@@ -30,6 +30,7 @@ final class UserViewController: UIViewController {
     }
     
     private func setUI() {
+        title = "Github Users"
         view.addSubview(tabButtonView)
         view.addSubview(fetchUserListViewController.view)
         view.addSubview(favoriteUserListViewController.view)

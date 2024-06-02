@@ -9,17 +9,17 @@ import Foundation
 import Alamofire
 
 final public class NetworkManager {
-    private let session: Session
+    private let session: Session = {
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .returnCacheDataElseLoad
+        return Session(configuration: config)
+    }()
     private let tokenHeaders: HTTPHeaders? = {
         guard let apiKey = Bundle.main.apiKey else { return nil }
         let headers: HTTPHeaders = ["Authorization": "Bearer \(apiKey)"]
         return headers
     }()
-    
-    init(session: Session = Session.default) {
-        self.session = session
-    }
-    
+
     func fetchData<T:Decodable> (url: String, method: HTTPMethod, dataType: T.Type) async -> Result<T, NetworkError> {
         guard let url = URL(string: url) else {
             return .failure(NetworkError.urlError)
